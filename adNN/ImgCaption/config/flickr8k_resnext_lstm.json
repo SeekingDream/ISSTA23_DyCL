@@ -1,0 +1,34 @@
+{
+  "seed": 2021,
+  "save_path" : "./model_weight/flick8k",
+  "log_path" : "./model_weight/flick8k_log",
+  "device" : 4,
+  "data": {
+        "data_folder": "/home/sxc180080/data/Project/SeqStealer/image_caption/dataset/flickr8k",
+        "data_name": "flickr8k_5_cap_per_img_5_min_word_freq"
+  },
+  "model": {
+    "encoder": "resnext",
+    "decoder": "lstm",
+    "encoder_dim": 1024,
+    "emb_dim": 512,
+    "attention_dim": 512,
+    "decoder_dim": 512,
+    "dropout": 0.5
+  },
+  "train_config": {
+    "start_epoch": 0,
+    "epochs": 200,
+    "epochs_since_improvement": 0,
+    "batch_size": 32,
+    "workers": 1,
+    "encoder_lr": 1e-4,
+    "decoder_lr": 4e-4,
+    "grad_clip": 5.0 ,
+    "alpha_c": 1.0,
+    "best_bleu4": 0.0,
+    "print_freq": 100,
+    "fine_tune_encoder": 0
+  }
+
+}
