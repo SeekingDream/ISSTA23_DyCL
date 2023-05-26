@@ -19,9 +19,7 @@
 
 4. Install the Library
    1. Running ``pip install -r requirements.txt`` to install the necessary library
-   2. 
 
-5. Install XXX
 
 
 ### File Structure
