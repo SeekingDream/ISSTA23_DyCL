@@ -38,20 +38,12 @@
 
 ### How to Run
     
-
-### Quick Start
-
-
-
-# Detailed Instructions
+First pacompilerse the dynamic neural network model 
+``bash run_compil.sh``
+After compilation, evaluating the compiled executable
+``bash run_evaluate.sh``
 
 
-### RQ1 Results
 
-### RQ2 Results 
-
-### RQ3 Results
-
-### RQ4 Results
 
 
