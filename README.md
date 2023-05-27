@@ -19,9 +19,7 @@
 
 4. Install the Library
    1. Running ``pip install -r requirements.txt`` to install the necessary library
-   2. 
 
-5. Install XXX
 
 
 ### File Structure
@@ -38,20 +36,12 @@
 
 ### How to Run
     
-
-### Quick Start
-
-
-
-# Detailed Instructions
+First pacompilerse the dynamic neural network model 
+``bash run_compil.sh``
+After compilation, evaluating the compiled executable
+``bash run_evaluate.sh``
 
 
-### RQ1 Results
 
-### RQ2 Results 
-
-### RQ3 Results
-
-### RQ4 Results
 
 
