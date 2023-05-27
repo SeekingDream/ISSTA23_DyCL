@@ -71,6 +71,7 @@ class CaptionDataset(Dataset):
                 self.captions[((i // self.cpi) * self.cpi):(((i // self.cpi) * self.cpi) + self.cpi)])
             # return img, caption, caplen, all_captions
             return img
+
     def __len__(self):
         return self.dataset_size
 
@@ -162,7 +163,7 @@ def create_encoder_decoder(task_id, word_map):
     device = torch.device('cuda')
 
     config_name = MODEL_FILE_LIST[task_id] + '.json'
-    with open(os.path.join('/disk/CM/Project/AdNNCL/adNN/ImgCaption/config', config_name), 'r') as f:
+    with open(os.path.join('./adNN/ImgCaption/config', config_name), 'r') as f:
         config = json.load(f)
     encoder_type = config['model']['encoder']
     encoder_dim = config['model']["encoder_dim"]
@@ -199,28 +200,23 @@ def load_encoder_decoder(data_path, task_id, batch_size=1, num_workers=1):
 
     task_name = DATA_NAME_DICT[data_name]
 
-    test_loader = torch.utils.data.DataLoader(
-        CaptionDataset(data_folder, task_name, 'TEST', ),
-        batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
+    # test_loader = torch.utils.data.DataLoader(
+    #     CaptionDataset(data_folder, task_name, 'TEST', ),
+    #     batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
 
-    word_map_path = '/disk/CM/Project/Dataset/' + task_name.split('_')[0] + '/WORDMAP_' + task_name + '.json'
+    word_map_path = os.path.join(data_path, task_name.split('_')[0] + '/WORDMAP_' + task_name + '.json')
     with open(word_map_path, 'r') as j:
         word_map = json.load(j)
-
-    file_name = MODEL_FILE_LIST[task_id]
-    data_dir = '/disk/CM/Project/pre-trained-models/ImageCaption/state_dict'
-    # encoder_s, decoder_s = torch.load(os.path.join(data_dir, 'BEST_' + file_name + '.pth.tar'))
-    # encoder, decoder = state['encoder'], state['decoder']
 
     encoder, decoder = create_encoder_decoder(task_id, word_map)
     # encoder.load_state_dict(encoder_s)
     # decoder.load_state_dict(decoder_s)
-
+    test_loader = None
     return encoder, decoder, test_loader, word_map
 
 
-def load_img_caption_model(task_id, max_length):
-    encoder, decoder, test_loader, word_map = load_encoder_decoder(task_id)
+def load_img_caption_model(data_path, task_id, max_length):
+    encoder, decoder, test_loader, word_map = load_encoder_decoder(data_path, task_id)
     caption_model = CaptionModel(encoder, decoder, word_map, max_length=max_length)
     return caption_model, test_loader
 

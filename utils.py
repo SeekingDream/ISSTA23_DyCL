@@ -295,13 +295,16 @@ def load_model(adnn_id):
         example_x = {'x': torch.zeros([1, 3, 32, 32], requires_grad=False)}
 
     elif adnn_id == 6:   # image caption
-        model, test_loader = load_img_caption_model(task_id=0, max_length=10)
+
+        model, _ = load_img_caption_model(data_path=DATA_PATH, task_id=0, max_length=10)
+        _, test_loader = load_ShallowDeep('vgg16')
         src = inspect.getsource(CaptionModel)
         compile_func = 'forward_compile'
         example_x = {'x': torch.zeros([1, 3, 256, 256], requires_grad=False)}
 
     elif adnn_id == 7:  # image caption
-        model, test_loader = load_img_caption_model(task_id=1, max_length=10)
+        model, _ = load_img_caption_model(data_path=DATA_PATH, task_id=1, max_length=10)
+        _, test_loader = load_ShallowDeep('vgg16')
         src = inspect.getsource(CaptionModel)
         compile_func = 'forward_compile'
         example_x = {'x': torch.zeros([1, 3, 256, 256], requires_grad=False)}
@@ -463,22 +466,8 @@ def test_TVM_interpreter_correctness(basemodel, TVM_API, compile_model_dict, tes
     return True, max_error_his, trace_his, compile_time, ori_time
 
 @torch.no_grad()
-def test_TVM_binary_correctness(basemodel, TVM_API, compile_model_dict, test_loader, compile_func, constant_dict, device):
+def test_TVM_binary_correctness(basemodel, TVM_API, compile_model_dict, test_loader, compile_func, constant_dict, device, repeat_num=5):
     self = MyConfigClass(basemodel)
-    if PLATFORM == 'weilab':
-        if device.type == 'cpu':
-            repeat_num = 10
-        elif device.type == 'cuda':
-            repeat_num = 30
-        else:
-            raise NotImplemented
-    else:
-        if device.type == 'cpu':
-            repeat_num = 1
-        elif device.type == 'cuda':
-            repeat_num = 3
-        else:
-            raise NotImplemented
     compile_exe_time, ori_exe_time = [], []
     max_error_his = 0
     trace_his = []
@@ -549,22 +538,8 @@ def test_TVM_binary_correctness(basemodel, TVM_API, compile_model_dict, test_loa
 
 
 @torch.no_grad()
-def test_ONNX_correctness(basemodel, predict_api, compile_model_dict, test_loader, compile_func, constant_dict, device):
+def test_ONNX_correctness(basemodel, predict_api, compile_model_dict, test_loader, compile_func, constant_dict, device, repeat_num=3):
     self = MyConfigClass(basemodel)
-    if PLATFORM == 'weilab':
-        if device.type == 'cpu':
-            repeat_num = 10
-        elif device.type == 'cuda':
-            repeat_num = 30
-        else:
-            raise NotImplemented
-    else:
-        if device.type == 'cpu':
-            repeat_num = 1
-        elif device.type == 'cuda':
-            repeat_num = 3
-        else:
-            raise NotImplemented
     compile_exe_time, ori_exe_time = [], []
     max_error_his = 0
     trace_his = []

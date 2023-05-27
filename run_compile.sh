@@ -11,5 +11,6 @@ done
 
 for task in $TaskList
 do
-  python compile_tvm.py --eval_id="$task"
+  python compile_tvm.py --eval_id="$task" --optimize=0
+  python compile_tvm.py --eval_id="$task" --optimize=1
 done

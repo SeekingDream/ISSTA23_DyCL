@@ -8,12 +8,13 @@ import numpy as np
 from utils import META_DIR, test_TVM_binary_correctness
 from utils import load_model, load_tvm_model
 from utils import OPT_TVM_DIR, TVM_DIR, RES_DIR
-
-from tmp import TVM_API_Binary_OPT
-from tmp import TVM_API_Binary_No_OPT
+from shutil import copyfile
 
 
 def main(task_id, device_id, is_optimize):
+    from tmp import TVM_API_Binary_OPT
+    from tmp import TVM_API_Binary_No_OPT
+
     pred_api_list = [TVM_API_Binary_No_OPT, TVM_API_Binary_OPT]
     pred_api = pred_api_list[is_optimize]
     if device_id == 0:
@@ -82,5 +83,6 @@ if __name__ == '__main__':
     parser.add_argument("--device", default=0, type=int, help="configuration file")
     parser.add_argument("--optimize", default=1, type=int, help="configuration file")
     args = parser.parse_args()
+    copyfile('compile_model/src_code/%d.py' % args.eval_id, 'tmp/demo.py')
     main(int(args.eval_id), args.device, is_optimize=args.optimize)
 

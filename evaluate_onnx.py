@@ -7,12 +7,13 @@ import numpy as np
 from utils import META_DIR, test_ONNX_correctness
 from utils import load_model, load_onnx_runtime
 from utils import OPTIMIZE_ONNX, ONNX_DIR, RES_DIR
-
-from tmp import ONNX_API_OPT
-from tmp import ONNX_API_No_OPT
+from shutil import copyfile
 
 
 def main(task_id, device_id, is_optimize):
+    from tmp import ONNX_API_OPT
+    from tmp import ONNX_API_No_OPT
+
     pred_api_list = [ONNX_API_No_OPT, ONNX_API_OPT]
     pred_api = pred_api_list[is_optimize]
     if device_id == 0:
@@ -75,9 +76,10 @@ def main(task_id, device_id, is_optimize):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="evaluate onnx runtime model")
-    parser.add_argument("--eval_id", default=8, type=int, help="configuration file")
+    parser.add_argument("--eval_id", default=0, type=int, help="configuration file")
     parser.add_argument("--device", default=0, type=int, help="configuration file")
     parser.add_argument("--optimize", default=1, type=int, help="configuration file")
     args = parser.parse_args()
+    copyfile('compile_model/src_code/%d.py' % args.eval_id, 'tmp/demo.py')
     main(int(args.eval_id), args.device, is_optimize=args.optimize)
 

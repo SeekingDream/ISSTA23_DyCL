@@ -361,7 +361,7 @@ def main(task_id):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="compile model id")
-    parser.add_argument("--eval_id", default=5, type=int, help="configuration file")
+    parser.add_argument("--eval_id", default=6, type=int, help="configuration file")
     args = parser.parse_args()
     main(args.eval_id)
     exit(0)
