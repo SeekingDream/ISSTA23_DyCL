@@ -47,23 +47,6 @@ After compilation, evaluating the compiled executable
 
 
 
-# Detailed Instructions
-
-The compiled DyNN might get different level acceleration on different hardware platforms.
-Our evaluation is conducted on Nvidia TX2 and Nvidia AGX, 
-to reproduce our experimental results, we provide the access to our experiment platform.
-
-1. Start by downloading the "AnyDesk" app on your laptop and connect to the 
-address ``429779282`` using the password ``zexinzexin``.
-2. Once connected to the remote desktop, open a terminal and 
-establish a connection to Nvidia AGX using the following command: 
-``ssh zexin@192.168.0.126`` with the password ``zexin``.
-3. After successfully connecting to AGX, navigate to our experimental directory by executing the command: 
-``cd /experiment/ISSTA23_DyCL/``.
-4. In the ``/experiment/ISSTA23_DyCL/compile_model`` directory, 
-you will find pre-compiled versions of each DyNN. To evaluate the compiled DyNNs, 
-simply run the command: ``bash run_evaluate.sh``.
-
 # Reusability
 
 DyCL offers a highly automated and user-friendly experience. The current implementation allows us to compile any DyNN using either OnnxRuntime or TVM.
