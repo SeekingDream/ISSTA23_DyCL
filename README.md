@@ -65,4 +65,3 @@ and a dataset for validating correctness ('test_loader').
 2. Once these components are ready, 
 we can customize the parameters for the compiler using the 'adnn_id' and compile it using either 'python compile_tvm.py --eval_id=adnn_id' or 'python compile_onnx.py --eval_id=adnn_id'."
 
-3. We provide a tutorial on how to use DyCL on our [website](https://github.com/SeekingDream/ISSTA23_DyCL).
